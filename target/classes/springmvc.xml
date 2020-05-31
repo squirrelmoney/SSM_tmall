@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"  
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+xmlns:aop="http://www.springframework.org/schema/aop"   
+xmlns:context="http://www.springframework.org/schema/context"  
+xmlns:jee="http://www.springframework.org/schema/jee"  
+xmlns:lang="http://www.springframework.org/schema/lang"  
+xmlns:util="http://www.springframework.org/schema/util"  
+xmlns:tx="http://www.springframework.org/schema/tx"  
+xmlns:mvc="http://www.springframework.org/schema/mvc"    
+xsi:schemaLocation="http://www.springframework.org/schema/beans  
+
+ http://www.springframework.org/schema/beans/spring-beans.xsd   
+ http://www.springframework.org/schema/aop    
+ http://www.springframework.org/schema/aop/spring-aop.xsd   
+ http://www.springframework.org/schema/jee    
+ http://www.springframework.org/schema/jee/spring-jee.xsd   
+ http://www.springframework.org/schema/lang    
+ http://www.springframework.org/schema/lang/spring-lang.xsd   
+ http://www.springframework.org/schema/context    
+ http://www.springframework.org/schema/context/spring-context.xsd   
+ http://www.springframework.org/schema/tx    
+ http://www.springframework.org/schema/tx/spring-tx.xsd   
+ http://www.springframework.org/schema/util    
+ http://www.springframework.org/schema/util/spring-util.xsd   
+ http://www.springframework.org/schema/mvc    
+ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+<!--  spring 可以自动去扫描 base-package下面的包或子包下面的Java文件，如果扫描到有Spring的相关
+注解的类，则把这些类注册为Spring的bean -->
+    <!--第一步：扫描controller-->
+<context:component-scan base-package="com.lnsf.tmall.controller"></context:component-scan>
+
+
+<!--第二步：注解配置处理器映射器1：寻找controller。-->
+<!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean>-->
+
+<!--第三步：注解配置处理器适配器：执行controller，返回modelandview
+controller要实现controller接口-->
+<!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" ></bean>-->
+
+<!--自动注册RequestMappingHandlerMapping与RequestMappingHandlerAdapter两个Bean,
+这是Spring MVC为@Controller分发请求所必需的-->
+<mvc:annotation-driven/><!-- 开启注解模式，代替以上注解方法：处理器映射器、处理器适配器-->
+
+<!--第四步：配置视图解析器 ：返回逻辑视图，相对路径 -->
+<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+<property name="prefix" value="/WEB-INF/jsps/"></property><!--路径前缀-->
+<property name="suffix" value=".jsp"></property>
+</bean>
+
+
+
+
+    <!-- 定义文件上传解析器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设定默认编码 -->
+        <property name="defaultEncoding" value="UTF-8"></property>
+        <!-- 设定文件上传的最大值5MB，5*1024*1024 -->
+        <property name="maxUploadSize" value="10240000"></property>
+        <!-- 其他的可以自行配置，不影响主功能-->
+    </bean>
+
+<mvc:annotation-driven />
+<!--开通静态资源的访问-->
+<mvc:default-servlet-handler />
+<!--出于安全考虑，jsp放在WEB-INT下-->
+ </beans> 
