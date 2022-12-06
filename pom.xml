@@ -275,7 +275,7 @@
 
       <artifactId>commons-net</artifactId>
 
-      <version>3.3</version>
+      <version>3.9.0</version>
 
     </dependency>
 <!--使用Jersey框架实现跨服务器上传-->
